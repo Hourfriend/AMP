@@ -9,10 +9,10 @@
   <!-- ── Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) ── -->
   <!-- REPLACE: swap YOUR_DOMAIN with your actual domain e.g. https://austinmichaelproductions.com -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://github.com/Hourfriend/AMP">
+  <meta property="og:url"         content="https://YOUR_DOMAIN">
   <meta property="og:title"       content="Austin Michael Productions">
   <meta property="og:description" content="Elite visuals for brands built to grow. Premium video, drone, photography & digital growth.">
-  <meta property="og:image"       content="https://github.com/Hourfriend/AMP/og-image.png">
+  <meta property="og:image"       content="https://YOUR_DOMAIN/og-image.png">
   <meta property="og:image:width" content="1731">
   <meta property="og:image:height"content="909">
   <meta property="og:image:alt"   content="Austin Michael Productions — Elite visuals for brands built to grow.">
@@ -20,10 +20,10 @@
 
   <!-- ── Twitter / X Card ── -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:url"         content="https://github.com/Hourfriend/AMP">
+  <meta name="twitter:url"         content="https://YOUR_DOMAIN">
   <meta name="twitter:title"       content="Austin Michael Productions">
   <meta name="twitter:description" content="Elite visuals for brands built to grow. Premium video, drone, photography & digital growth.">
-  <meta name="twitter:image"       content="https://github.com/Hourfriend/AMP/og-image.png">
+  <meta name="twitter:image"       content="https://YOUR_DOMAIN/og-image.png">
   <meta name="twitter:image:alt"   content="Austin Michael Productions — Elite visuals for brands built to grow.">
 
   <!-- Google Fonts: Syne (display) + Manrope (body) -->
@@ -306,48 +306,59 @@
        HERO
     ============================================================ */
     #hero {
-      position: relative; height: 100vh; min-height: 640px;
+      position: relative; height: 100vh; min-height: 600px;
       display: flex; align-items: center; justify-content: center;
       overflow: hidden;
     }
-    /* Animated background fallback (replace with video) */
+
+    /* Animated gradient fallback — visible when no video/reel loaded */
     .hero-bg {
       position: absolute; inset: 0; z-index: 0;
       background:
-        radial-gradient(ellipse 80% 70% at 65% 45%, rgba(30,42,56,0.55) 0%, transparent 65%),
+        radial-gradient(ellipse 80% 70% at 65% 45%, rgba(30,42,56,0.6) 0%, transparent 65%),
         radial-gradient(ellipse 50% 50% at 20% 80%, rgba(20,30,45,0.3) 0%, transparent 60%),
         linear-gradient(160deg, #0A0A0A 0%, #0d1420 55%, #0A0A0A 100%);
-      animation: bgDrift 18s ease-in-out infinite alternate;
-    }
-    @keyframes bgDrift {
-      0%   { background-position: 65% 45%, 20% 80%, 0 0; }
-      100% { background-position: 70% 40%, 25% 75%, 0 0; }
     }
 
-    /* REPLACE: Your showreel video — drop in src to activate */
+    /* ── Fullscreen YouTube showreel background ──
+       REPLACE: swap both YOUR_REEL_ID placeholders in the iframe src below */
+    .hero-yt-wrap {
+      position: absolute; inset: 0; z-index: 1; overflow: hidden; pointer-events: none;
+    }
+    .hero-yt-wrap iframe {
+      /* 16:9 cover technique — always fills viewport */
+      position: absolute;
+      width: 100vw;  height: 56.25vw;   /* 16:9 */
+      min-width: 177.78vh; min-height: 100vh;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      border: 0; pointer-events: none;
+    }
+
+    /* Fallback MP4 (fires if YouTube is blocked / on iOS) */
     .hero-video-wrap {
       position: absolute; inset: 0; z-index: 1;
     }
     .hero-video-wrap video {
-      width: 100%; height: 100%; object-fit: cover; opacity: 0.38;
+      width: 100%; height: 100%; object-fit: cover; opacity: 0.55;
     }
 
     .hero-overlay {
       position: absolute; inset: 0; z-index: 2;
       background: linear-gradient(
         to bottom,
-        rgba(10,10,10,0.5) 0%,
-        rgba(10,10,10,0.35) 50%,
-        rgba(10,10,10,0.7) 100%
+        rgba(10,10,10,0.55) 0%,
+        rgba(10,10,10,0.38) 40%,
+        rgba(10,10,10,0.72) 100%
       );
     }
 
-    /* Subtle animated grid lines */
+    /* Subtle grid overlay */
     .hero-lines {
       position: absolute; inset: 0; z-index: 2;
       background-image:
-        linear-gradient(rgba(255,255,255,0.018) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255,255,255,0.018) 1px, transparent 1px);
+        linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px);
       background-size: 80px 80px;
       mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 0%, transparent 100%);
     }
@@ -358,8 +369,7 @@
       padding: 0 var(--pad-x);
       width: 100%;
       max-width: var(--max-w);
-      opacity: 0;
-      transform: translateY(36px);
+      opacity: 0; transform: translateY(36px);
       animation: heroIn 1.1s var(--ease-expo) 1.8s forwards;
     }
     @keyframes heroIn {
@@ -367,36 +377,37 @@
     }
 
     .hero-eyebrow {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.45em;
-      text-transform: uppercase; color: var(--gunmetal);
-      margin-bottom: 28px;
+      font-size: 10px; font-weight: 500; letter-spacing: 0.5em;
+      text-transform: uppercase; color: rgba(168,168,168,0.7);
+      margin-bottom: 24px;
       opacity: 0; animation: heroIn 0.8s var(--ease-expo) 2.1s forwards;
     }
 
+    /* Lighter, more cinematic title */
     .hero-title {
       font-family: var(--font-display);
-      font-weight: 800;
-      font-size: clamp(52px, 10.5vw, 150px);
-      line-height: 0.9;
-      letter-spacing: -0.02em;
+      font-weight: 300;
+      font-size: clamp(44px, 9vw, 130px);
+      line-height: 0.92;
+      letter-spacing: 0.04em;
       text-transform: uppercase;
       color: var(--white);
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       opacity: 0; animation: heroIn 0.9s var(--ease-expo) 1.9s forwards;
     }
     .hero-title-sub {
       font-family: var(--font-display);
-      font-weight: 400;
-      font-size: clamp(14px, 2.2vw, 28px);
-      letter-spacing: 0.55em;
+      font-weight: 300;
+      font-size: clamp(12px, 2vw, 24px);
+      letter-spacing: 0.65em;
       text-transform: uppercase;
       color: var(--silver);
-      margin-bottom: 44px;
+      margin-bottom: 48px;
       opacity: 0; animation: heroIn 0.8s var(--ease-expo) 2.0s forwards;
     }
     .hero-desc {
-      font-size: clamp(14px, 1.6vw, 18px); font-weight: 300; color: var(--silver);
-      letter-spacing: 0.04em; margin-bottom: 56px;
+      font-size: clamp(13px, 1.5vw, 17px); font-weight: 300; color: var(--silver);
+      letter-spacing: 0.06em; margin-bottom: 52px;
       opacity: 0; animation: heroIn 0.8s var(--ease-expo) 2.2s forwards;
     }
     .hero-actions {
@@ -406,19 +417,19 @@
     }
 
     .scroll-cue {
-      position: absolute; bottom: 44px; left: 50%; transform: translateX(-50%);
+      position: absolute; bottom: 36px; left: 50%; transform: translateX(-50%);
       z-index: 3; display: flex; flex-direction: column; align-items: center; gap: 10px;
       opacity: 0; animation: heroIn 0.8s var(--ease-expo) 2.8s forwards;
     }
     .scroll-cue-label {
-      font-size: 9px; font-weight: 600; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gunmetal);
+      font-size: 9px; font-weight: 500; letter-spacing: 0.4em; text-transform: uppercase; color: var(--gunmetal);
     }
     .scroll-cue-line {
-      width: 1px; height: 52px;
+      width: 1px; height: 44px;
       background: linear-gradient(to bottom, var(--gunmetal), transparent);
       animation: pulse 2.2s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100%{opacity:0.35} 50%{opacity:1} }
+    @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.9} }
 
     /* ============================================================
        BUTTONS
@@ -763,48 +774,119 @@
     /* ============================================================
        RESPONSIVE
     ============================================================ */
+    /* ============================================================
+       RESPONSIVE — TABLET
+    ============================================================ */
     @media (max-width: 1024px) {
+      :root { --pad-x: clamp(20px, 5vw, 60px); }
+
       .services-grid { grid-template-columns: 1fr; }
-      .svc { border-right: none; border-bottom: 1px solid var(--border); padding: 48px 36px; }
+      .svc { border-right: none; border-bottom: 1px solid var(--border); padding: 40px 28px; }
       .svc:last-child { border-bottom: none; }
 
       .ind-grid { grid-template-columns: repeat(2, 1fr); }
-
       .work-grid { grid-template-columns: repeat(2, 1fr); }
 
-      .founder-grid { grid-template-columns: 1fr; gap: 52px; }
-      .founder-img-wrap { aspect-ratio: 16/9; max-height: 420px; }
+      .founder-grid { grid-template-columns: 1fr; gap: 44px; }
+      .founder-img-wrap { aspect-ratio: 16/9; max-height: 380px; }
       .founder-img-wrap::after { display: none; }
 
-      .why-cols { grid-template-columns: 1fr; }
-      .why-col { padding: 40px 32px; }
+      .why-cols { grid-template-columns: 1fr; gap: 2px; }
+      .why-col { padding: 36px 28px; }
     }
 
+    /* ============================================================
+       RESPONSIVE — MOBILE
+    ============================================================ */
     @media (max-width: 768px) {
+      :root {
+        --pad-x: 20px;
+        --sec-y: clamp(60px, 10vw, 100px);
+      }
+
+      /* Nav */
+      nav { padding: 22px var(--pad-x); }
+      nav.scrolled { padding: 16px var(--pad-x); }
       .nav-links, .nav-btn { display: none; }
       .hamburger { display: flex; }
-      .vf, .cursor-ring { display: none; }
+      .vf { display: none; }
       body { cursor: auto; }
 
-      .hero-title { font-size: clamp(40px, 12vw, 72px); }
-      .hero-title-sub { letter-spacing: 0.3em; font-size: clamp(11px, 2.5vw, 16px); }
+      /* Hero */
+      #hero { min-height: 100svh; }
+      /* On mobile, hide YouTube iframe (autoplay blocked) — gradient shows */
+      .hero-yt-wrap { display: none; }
+      .hero-title {
+        font-size: clamp(38px, 11vw, 64px);
+        letter-spacing: 0.02em;
+      }
+      .hero-title-sub {
+        font-size: clamp(10px, 3vw, 14px);
+        letter-spacing: 0.4em;
+      }
+      .hero-desc { font-size: 14px; margin-bottom: 36px; }
+      .hero-actions { gap: 12px; }
+      .scroll-cue { display: none; }
 
-      .industries-top { flex-direction: column; align-items: flex-start; }
-      .industries-note { text-align: left; }
+      /* Ticker */
+      .ticker-wrap { padding: 12px 0; }
+      .ticker-item { font-size: 9px; padding: 0 32px; }
 
-      .ind-grid { grid-template-columns: repeat(2, 1fr); }
+      /* Statement */
+      #statement { padding: clamp(60px, 12vw, 100px) var(--pad-x); }
+
+      /* Services */
+      .services-header { margin-bottom: 0; }
+      .svc { padding: 36px 20px; }
+      .svc-title { font-size: clamp(20px, 5vw, 28px); }
+
+      /* Industries */
+      .industries-top { gap: 24px; }
+      .industries-note { display: none; }
+      .ind-grid { grid-template-columns: 1fr 1fr; }
+      .ind-item { padding: 24px 20px; gap: 10px; }
+      .ind-name { font-size: clamp(12px, 3.5vw, 15px); }
+
+      /* Work */
       .work-grid { grid-template-columns: 1fr; }
+      .reel-container { margin-top: 36px; }
 
-      .founder-stats { gap: 32px; }
+      /* Founder */
+      .founder-stats { gap: 24px; flex-wrap: wrap; }
+      .fstat-n { font-size: clamp(26px, 7vw, 38px); }
+      .founder-bio { font-size: 14px; }
 
-      .footer-inner { flex-direction: column; align-items: flex-start; }
+      /* Why */
+      .why-headline { font-size: clamp(26px, 7vw, 44px); margin-bottom: 40px; }
+
+      /* Contact */
+      .contact-title { font-size: clamp(34px, 10vw, 64px); }
+
+      /* Footer */
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .footer-links { flex-wrap: wrap; gap: 18px; }
+
+      /* Buttons — full-width, proper touch targets */
+      .btn { padding: 17px 32px; min-height: 52px; }
     }
 
+    /* ============================================================
+       RESPONSIVE — SMALL MOBILE
+    ============================================================ */
     @media (max-width: 480px) {
-      .hero-actions { flex-direction: column; align-items: stretch; }
-      .btn { text-align: center; }
+      .hero-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 280px; margin: 0 auto; }
+      .btn { text-align: center; width: 100%; }
+
       .ind-grid { grid-template-columns: 1fr 1fr; }
-      .footer-links { flex-wrap: wrap; }
+      .ind-item { padding: 20px 16px; }
+
+      .founder-stats { gap: 20px; }
+      .why-col { padding: 28px 20px; }
+
+      .contact-hint { display: none; }
+      .contact-actions { flex-direction: column; align-items: stretch; width: 100%; max-width: 280px; margin: 0 auto 0; }
+
+      .footer-links { gap: 14px; }
     }
 
   </style>
@@ -883,10 +965,20 @@
   <section id="hero">
     <div class="hero-bg" aria-hidden="true"></div>
 
-    <!-- REPLACE: Drop in your showreel MP4 source to activate video -->
-    <div class="hero-video-wrap">
+    <!-- ── Fullscreen showreel background (YouTube) ──
+         REPLACE: swap YOUR_REEL_ID in both places in the src below.
+         Example: ...embed/dQw4w9WgXcQ?playlist=dQw4w9WgXcQ...  -->
+    <div class="hero-yt-wrap" aria-hidden="true">
+      <iframe
+        src="https://www.youtube.com/embed/YOUR_REEL_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_REEL_ID&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
+        title="" allow="autoplay; encrypted-media" allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Fallback MP4 — shown on mobile / when YouTube blocked -->
+    <div class="hero-video-wrap" aria-hidden="true">
       <video autoplay muted loop playsinline>
-        <!-- <source src="YOUR_SHOWREEL.mp4" type="video/mp4"> -->
+        <!-- REPLACE: <source src="YOUR_SHOWREEL.mp4" type="video/mp4"> -->
       </video>
     </div>
 
@@ -1154,24 +1246,19 @@
 
     /* ── Viewfinder cursor ───────────────────────────── */
     const vf = document.getElementById('vf');
-    let vx = 0, vy = 0;   // current rendered pos (smoothed)
-    let tx = 0, ty = 0;   // target pos (mouse)
 
+    // Snap directly to mouse — precise, no lag
     window.addEventListener('mousemove', e => {
-      tx = e.clientX; ty = e.clientY;
+      vf.style.left = e.clientX + 'px';
+      vf.style.top  = e.clientY + 'px';
       vf.classList.add('active');
-    });
+    }, { passive: true });
 
-    // Slight lag so it feels like a heavy lens / camera body
-    (function animVF() {
-      vx += (tx - vx) * 0.14;
-      vy += (ty - vy) * 0.14;
-      vf.style.left = vx + 'px';
-      vf.style.top  = vy + 'px';
-      requestAnimationFrame(animVF);
-    })();
+    // Hide when mouse leaves window
+    document.addEventListener('mouseleave', () => vf.classList.remove('active'));
+    document.addEventListener('mouseenter', () => vf.classList.add('active'));
 
-    // Hover states — corners expand + pulse ring fires + brackets rotate
+    // Hover states — corners expand + pulse ring fires + rotate
     document.querySelectorAll('a, button, .wcard, .svc, .ind-item, .why-col, .nav-btn, .btn').forEach(el => {
       el.addEventListener('mouseenter', () => vf.classList.add('hover'));
       el.addEventListener('mouseleave', () => vf.classList.remove('hover'));

@@ -827,15 +827,11 @@
         position: absolute; inset: 0; z-index: 1; overflow: hidden;
         pointer-events: none;
       }
-      /* 9:16 cover technique for portrait iframe */
-      .hero-mob-video-wrap iframe {
-        position: absolute;
-        height: 100vh;  width: 177.78vh;   /* 16:9 inverted for portrait fill */
-        min-height: 56.25vw; min-width: 100vw;
-        top: 50%; left: 50%;
-        transform: translate(-50%, -50%);
-        border: 0; pointer-events: none;
+      .hero-mob-video-wrap video {
+        width: 100%; height: 100%;
+        object-fit: cover; object-position: center top;
         opacity: 0.55;
+        pointer-events: none;
       }
       .hero-title {
         font-size: clamp(38px, 11vw, 64px);
@@ -996,12 +992,11 @@
       </iframe>
     </div>
 
-    <!-- ── MOBILE: Vertical showreel (YouTube Shorts) ── -->
+    <!-- ── MOBILE: Vertical showreel — native video (autoplays on iOS) ── -->
     <div class="hero-mob-video-wrap" aria-hidden="true">
-      <iframe
-        src="https://www.youtube.com/embed/oyzjH2mjgXU?autoplay=1&mute=1&loop=1&playlist=oyzjH2mjgXU&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
-        title="" allow="autoplay; encrypted-media" allowfullscreen>
-      </iframe>
+      <video autoplay muted loop playsinline disablepictureinpicture preload="auto">
+        <source src="mobile_reel.mp4" type="video/mp4">
+      </video>
     </div>
 
     <div class="hero-overlay" aria-hidden="true"></div>

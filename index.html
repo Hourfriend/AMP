@@ -1281,6 +1281,38 @@
       el.addEventListener('mouseleave', () => vf.classList.remove('hover'));
     });
 
+    /* ── Mobile video: force autoplay on iOS ────────────
+       iOS Safari blocks autoplay until a user gesture fires,
+       but allows it if triggered programmatically on load.
+       We try immediately, then on visibility change, then on
+       first touch — covering every iOS edge case.           */
+    const mobVid = document.querySelector('.hero-mob-video-wrap video');
+    if (mobVid) {
+      function forcePlay() {
+        mobVid.muted = true;           // must be muted for iOS autoplay
+        mobVid.play().catch(() => {});  // silence the promise rejection
+      }
+
+      // Try immediately
+      forcePlay();
+
+      // Try again once DOM is ready
+      window.addEventListener('load', forcePlay);
+
+      // Re-fire if user navigates away and comes back (tab switch / lock screen)
+      document.addEventListener('visibilitychange', () => {
+        if (!document.hidden) forcePlay();
+      });
+
+      // Last resort: play on first touch anywhere on the page
+      // (removes itself after firing once)
+      function touchPlay() {
+        forcePlay();
+        document.removeEventListener('touchstart', touchPlay);
+      }
+      document.addEventListener('touchstart', touchPlay, { passive: true });
+    }
+
     /* ── Nav scroll behavior ─────────────────────────── */
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {

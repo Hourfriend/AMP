@@ -9,10 +9,10 @@
   <!-- ── Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) ── -->
   <!-- REPLACE: swap YOUR_DOMAIN with your actual domain e.g. https://austinmichaelproductions.com -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://hourfriend.github.io/AMP">
+  <meta property="og:url"         content="https://YOUR_DOMAIN">
   <meta property="og:title"       content="Austin Michael Productions">
   <meta property="og:description" content="Elite visuals for brands built to grow. Premium video, drone, photography & digital growth.">
-  <meta property="og:image"       content="https://hourfriend.github.io/AMP/og-image.png">
+  <meta property="og:image"       content="https://YOUR_DOMAIN/og-image.png">
   <meta property="og:image:width" content="1731">
   <meta property="og:image:height"content="909">
   <meta property="og:image:alt"   content="Austin Michael Productions — Elite visuals for brands built to grow.">
@@ -20,10 +20,10 @@
 
   <!-- ── Twitter / X Card ── -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:url"         content="https://hourfriend.github.io/AMP">
+  <meta name="twitter:url"         content="https://YOUR_DOMAIN">
   <meta name="twitter:title"       content="Austin Michael Productions">
   <meta name="twitter:description" content="Elite visuals for brands built to grow. Premium video, drone, photography & digital growth.">
-  <meta name="twitter:image"       content="https://hourfriend.github.io/AMP/og-image.png">
+  <meta name="twitter:image"       content="https://YOUR_DOMAIN/og-image.png">
   <meta name="twitter:image:alt"   content="Austin Michael Productions — Elite visuals for brands built to grow.">
 
   <!-- Google Fonts: Syne (display) + Manrope (body) -->
@@ -318,6 +318,11 @@
         radial-gradient(ellipse 80% 70% at 65% 45%, rgba(30,42,56,0.6) 0%, transparent 65%),
         radial-gradient(ellipse 50% 50% at 20% 80%, rgba(20,30,45,0.3) 0%, transparent 60%),
         linear-gradient(160deg, #0A0A0A 0%, #0d1420 55%, #0A0A0A 100%);
+    }
+
+    /* Mobile vertical video — hidden on desktop */
+    .hero-mob-video-wrap {
+      display: none;
     }
 
     /* ── Fullscreen YouTube showreel background ──
@@ -814,8 +819,24 @@
 
       /* Hero */
       #hero { min-height: 100svh; }
-      /* On mobile, hide YouTube iframe (autoplay blocked) — gradient shows */
+      /* Desktop YouTube iframe hidden on mobile */
       .hero-yt-wrap { display: none; }
+      /* Mobile vertical video — shown and covers full screen */
+      .hero-mob-video-wrap {
+        display: block;
+        position: absolute; inset: 0; z-index: 1; overflow: hidden;
+        pointer-events: none;
+      }
+      /* 9:16 cover technique for portrait iframe */
+      .hero-mob-video-wrap iframe {
+        position: absolute;
+        height: 100vh;  width: 177.78vh;   /* 16:9 inverted for portrait fill */
+        min-height: 56.25vw; min-width: 100vw;
+        top: 50%; left: 50%;
+        transform: translate(-50%, -50%);
+        border: 0; pointer-events: none;
+        opacity: 0.55;
+      }
       .hero-title {
         font-size: clamp(38px, 11vw, 64px);
         letter-spacing: 0.02em;
@@ -965,9 +986,9 @@
   <section id="hero">
     <div class="hero-bg" aria-hidden="true"></div>
 
-    <!-- ── Fullscreen showreel background (YouTube) ──
-         REPLACE: swap YOUR_REEL_ID in both places in the src below.
-         Example: ...embed/dQw4w9WgXcQ?playlist=dQw4w9WgXcQ...  -->
+    <!-- ── DESKTOP: Fullscreen YouTube showreel ──
+         REPLACE: swap YOUR_REEL_ID in both places below
+         Example: ...embed/dQw4w9WgXcQ?playlist=dQw4w9WgXcQ... -->
     <div class="hero-yt-wrap" aria-hidden="true">
       <iframe
         src="https://www.youtube.com/embed/YOUR_REEL_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_REEL_ID&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
@@ -975,11 +996,12 @@
       </iframe>
     </div>
 
-    <!-- Fallback MP4 — shown on mobile / when YouTube blocked -->
-    <div class="hero-video-wrap" aria-hidden="true">
-      <video autoplay muted loop playsinline>
-        <!-- REPLACE: <source src="YOUR_SHOWREEL.mp4" type="video/mp4"> -->
-      </video>
+    <!-- ── MOBILE: Vertical showreel (YouTube Shorts) ── -->
+    <div class="hero-mob-video-wrap" aria-hidden="true">
+      <iframe
+        src="https://www.youtube.com/embed/oyzjH2mjgXU?autoplay=1&mute=1&loop=1&playlist=oyzjH2mjgXU&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
+        title="" allow="autoplay; encrypted-media" allowfullscreen>
+      </iframe>
     </div>
 
     <div class="hero-overlay" aria-hidden="true"></div>

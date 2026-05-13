@@ -1238,8 +1238,8 @@
     <p class="contact-hint r d2">Accepting select projects</p>
     <div class="contact-actions r d3">
       <!-- REPLACE: update href with your actual email or contact page -->
-      <a href="mailto:hello@austinmichaelproductions.com" class="btn btn-light"><span>Start a Project</span></a>
-      <a href="mailto:hello@austinmichaelproductions.com" class="btn btn-ghost">Contact</a>
+      <a href="mailto:ampuskas@gmail.com" class="btn btn-light"><span>Start a Project</span></a>
+      <a href="mailto:ampuskas@gmail.com" class="btn btn-ghost">Contact</a>
     </div>
   </section>
 
@@ -1328,9 +1328,9 @@
       const iframe  = document.getElementById('reelIframe');
       const poster  = document.getElementById('reelPoster');
       const playBtn = document.getElementById('reelPlay');
-      // Load the src only on first click
-      if (!iframe.src || iframe.src === window.location.href) {
-        iframe.src = iframe.dataset.src;
+      // Set src from data-src on first click
+      if (!iframe.getAttribute('src')) {
+        iframe.setAttribute('src', iframe.getAttribute('data-src'));
       }
       iframe.classList.add('loaded');
       poster.classList.add('hide');

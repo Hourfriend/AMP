@@ -9,10 +9,10 @@
   <!-- ── Open Graph (Facebook, LinkedIn, iMessage, Slack, etc.) ── -->
   <!-- REPLACE: swap YOUR_DOMAIN with your actual domain e.g. https://austinmichaelproductions.com -->
   <meta property="og:type"        content="website">
-  <meta property="og:url"         content="https://github.com/Hourfriend/AMP">
+  <meta property="og:url"         content="https://YOUR_DOMAIN">
   <meta property="og:title"       content="Austin Michael Productions">
   <meta property="og:description" content="Elite visuals for brands built to grow. Premium video, drone, photography & digital growth.">
-  <meta property="og:image"       content="https://github.com/Hourfriend/AMP/og-image.png">
+  <meta property="og:image"       content="https://YOUR_DOMAIN/og-image.png">
   <meta property="og:image:width" content="1731">
   <meta property="og:image:height"content="909">
   <meta property="og:image:alt"   content="Austin Michael Productions — Elite visuals for brands built to grow.">
@@ -20,10 +20,10 @@
 
   <!-- ── Twitter / X Card ── -->
   <meta name="twitter:card"        content="summary_large_image">
-  <meta name="twitter:url"         content="https://github.com/Hourfriend/AMP">
+  <meta name="twitter:url"         content="https://YOUR_DOMAIN">
   <meta name="twitter:title"       content="Austin Michael Productions">
   <meta name="twitter:description" content="Elite visuals for brands built to grow. Premium video, drone, photography & digital growth.">
-  <meta name="twitter:image"       content="https://github.com/Hourfriend/AMP/og-image.png">
+  <meta name="twitter:image"       content="https://YOUR_DOMAIN/og-image.png">
   <meta name="twitter:image:alt"   content="Austin Michael Productions — Elite visuals for brands built to grow.">
 
   <!-- Google Fonts: Syne (display) + Manrope (body) -->
@@ -987,7 +987,7 @@
          Example: ...embed/dQw4w9WgXcQ?playlist=dQw4w9WgXcQ... -->
     <div class="hero-yt-wrap" aria-hidden="true">
       <iframe
-        src="https://www.youtube.com/embed/YOUR_REEL_ID?autoplay=1&mute=1&loop=1&playlist=YOUR_REEL_ID&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
+        src="https://www.youtube.com/embed/uqqUxHba8Nc?autoplay=1&mute=1&loop=1&playlist=uqqUxHba8Nc&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&iv_load_policy=3"
         title="" allow="autoplay; encrypted-media" allowfullscreen>
       </iframe>
     </div>
@@ -1124,50 +1124,15 @@
       <p class="label-tag r">Featured Work</p>
       <h2 class="sec-title r d1">The work<br>speaks first.</h2>
 
-      <!-- REPLACE: Swap YOUR_REEL_ID with your actual YouTube video ID -->
       <div class="reel-container r d2">
         <div class="reel-frame">
           <iframe
-            src="https://www.youtube.com/embed/YOUR_REEL_ID?rel=0&modestbranding=1&color=white"
+            src="https://www.youtube.com/embed/uqqUxHba8Nc?rel=0&modestbranding=1&color=white"
             title="Austin Michael Productions — Showreel"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
           </iframe>
-          <!-- Placeholder visible until you add a real reel ID -->
-          <div class="reel-placeholder" id="reelPH">
-            <div class="play-ring">
-              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <p class="play-label">Showreel — Coming Soon</p>
-          </div>
         </div>
-      </div>
-    </div>
-
-    <div class="work-grid" style="margin-top:3px">
-      <div class="wcard r">
-        <div class="wcard-bg cg1"></div><div class="wcard-shade"></div>
-        <div class="wcard-info"><p class="wcard-cat">Real Estate</p><p class="wcard-title">Luxury Property Campaign</p></div>
-      </div>
-      <div class="wcard r d1">
-        <div class="wcard-bg cg2"></div><div class="wcard-shade"></div>
-        <div class="wcard-info"><p class="wcard-cat">Brand Film</p><p class="wcard-title">Construction Identity</p></div>
-      </div>
-      <div class="wcard r d2">
-        <div class="wcard-bg cg3"></div><div class="wcard-shade"></div>
-        <div class="wcard-info"><p class="wcard-cat">Drone &amp; Aerial</p><p class="wcard-title">Development Overview</p></div>
-      </div>
-      <div class="wcard r d1">
-        <div class="wcard-bg cg4"></div><div class="wcard-shade"></div>
-        <div class="wcard-info"><p class="wcard-cat">Lifestyle</p><p class="wcard-title">Product Launch</p></div>
-      </div>
-      <div class="wcard r d2">
-        <div class="wcard-bg cg5"></div><div class="wcard-shade"></div>
-        <div class="wcard-info"><p class="wcard-cat">Music &amp; Culture</p><p class="wcard-title">Artist Visual Identity</p></div>
-      </div>
-      <div class="wcard r d3">
-        <div class="wcard-bg cg6"></div><div class="wcard-shade"></div>
-        <div class="wcard-info"><p class="wcard-cat">Growth Campaign</p><p class="wcard-title">Paid Media Series</p></div>
       </div>
     </div>
   </section>
@@ -1358,19 +1323,6 @@
         heroContent.style.opacity   = Math.max(0, 1 - ratio * 1.8);
       }
     }, { passive: true });
-
-    /* ── YouTube reel: hide placeholder when embed loads ── */
-    const iframe = document.querySelector('.reel-frame iframe');
-    const ph     = document.getElementById('reelPH');
-    if (iframe) {
-      // Show placeholder if the src still contains 'YOUR_REEL_ID'
-      const src = iframe.getAttribute('src') || '';
-      if (src.includes('YOUR_REEL_ID')) {
-        iframe.style.display = 'none';
-      } else {
-        if (ph) ph.style.display = 'none';
-      }
-    }
 
     /* ── Active nav link highlight ───────────────────── */
     const sections  = document.querySelectorAll('section[id]');

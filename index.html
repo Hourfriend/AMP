@@ -608,24 +608,58 @@
     .reel-container { margin-top: 60px; }
     .reel-frame {
       position: relative; width: 100%; aspect-ratio: 16/9;
-      background: var(--charcoal); overflow: hidden;
+      background: var(--charcoal); overflow: hidden; cursor: pointer;
     }
-    .reel-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-    /* Placeholder shown while video ID is unset */
-    .reel-placeholder {
-      position: absolute; inset: 0;
-      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 20px;
-      background: linear-gradient(135deg, var(--charcoal) 0%, rgba(30,42,56,0.4) 100%);
+    .reel-frame iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: 0;
+      opacity: 0; transition: opacity 0.4s var(--ease);
     }
+    .reel-frame iframe.loaded { opacity: 1; }
+
+    /* Poster facade — shown until user clicks play */
+    .reel-poster {
+      position: absolute; inset: 0; z-index: 2;
+      background: #000;
+      transition: opacity 0.5s var(--ease);
+    }
+    .reel-poster img {
+      width: 100%; height: 100%; object-fit: cover; opacity: 1;
+      display: block;
+    }
+    .reel-poster.hide { opacity: 0; pointer-events: none; }
+
+    /* Gradient over poster for play button contrast */
+    .reel-poster::after {
+      content: ''; position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.1) 60%, transparent 100%);
+    }
+
+    /* Play button */
+    .reel-play {
+      position: absolute; inset: 0; z-index: 3;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 18px;
+      transition: opacity 0.4s var(--ease);
+    }
+    .reel-play.hide { opacity: 0; pointer-events: none; }
     .play-ring {
-      width: 76px; height: 76px;
-      border: 1.5px solid rgba(255,255,255,0.3); border-radius: 50%;
+      width: 82px; height: 82px;
+      border: 1.5px solid rgba(255,255,255,0.5); border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      transition: all 0.3s; cursor: pointer;
+      transition: all 0.35s var(--ease);
+      backdrop-filter: blur(4px);
+      background: rgba(255,255,255,0.06);
     }
-    .play-ring:hover { border-color: var(--white); background: rgba(255,255,255,0.06); transform: scale(1.08); }
-    .play-ring svg { width: 22px; height: 22px; fill: var(--white); margin-left: 4px; }
-    .play-label { font-size: 10px; font-weight: 600; letter-spacing: 0.35em; text-transform: uppercase; color: var(--gunmetal); }
+    .reel-frame:hover .play-ring {
+      border-color: var(--white);
+      background: rgba(255,255,255,0.12);
+      transform: scale(1.1);
+    }
+    .play-ring svg { width: 24px; height: 24px; fill: var(--white); margin-left: 5px; }
+    .play-label {
+      font-size: 10px; font-weight: 600; letter-spacing: 0.4em;
+      text-transform: uppercase; color: rgba(240,237,232,0.6);
+    }
 
     .work-grid {
       display: grid; grid-template-columns: repeat(3, 1fr);
@@ -1125,9 +1159,23 @@
       <h2 class="sec-title r d1">The work<br>speaks first.</h2>
 
       <div class="reel-container r d2">
-        <div class="reel-frame">
+        <div class="reel-frame" id="reelFrame" onclick="playReel()">
+          <!-- Poster image — shown until play is clicked -->
+          <div class="reel-poster" id="reelPoster">
+            <img src="showreel-poster.jpg" alt="Austin Michael Productions Showreel">
+          </div>
+          <!-- Play button overlay -->
+          <div class="reel-play" id="reelPlay">
+            <div class="play-ring">
+              <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </div>
+            <p class="play-label">Play Showreel</p>
+          </div>
+          <!-- YouTube iframe — only activates on click -->
           <iframe
-            src="https://www.youtube.com/embed/xsfacLf78Q4?rel=0&modestbranding=1&color=white"
+            id="reelIframe"
+            src=""
+            data-src="https://www.youtube.com/embed/xsfacLf78Q4?autoplay=1&rel=0&modestbranding=1&color=white"
             title="Austin Michael Productions — Showreel"
             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
             allowfullscreen>
@@ -1276,6 +1324,20 @@
         document.removeEventListener('touchstart', touchPlay);
       }
       document.addEventListener('touchstart', touchPlay, { passive: true });
+    }
+
+    /* ── Showreel facade: click to load + play ───────── */
+    function playReel() {
+      const iframe  = document.getElementById('reelIframe');
+      const poster  = document.getElementById('reelPoster');
+      const playBtn = document.getElementById('reelPlay');
+      // Load the src only on first click
+      if (!iframe.src || iframe.src === window.location.href) {
+        iframe.src = iframe.dataset.src;
+      }
+      iframe.classList.add('loaded');
+      poster.classList.add('hide');
+      playBtn.classList.add('hide');
     }
 
     /* ── Nav scroll behavior ─────────────────────────── */
